@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package lunarclient.gameipc.promotion.v1;
+
+
+option java_package = "com.lunarclient.gameipc.promotion.v1";
+option java_outer_classname = "CommonProto";
+option java_multiple_files = true;
+
+
+enum PromotionType {
+  PROMOTION_TYPE_UNSPECIFIED = 0;
+  PROMOTION_TYPE_VIDEO = 1;
+  PROMOTION_TYPE_OUTPLAYED = 2;
+  PROMOTION_TYPE_MEDAL = 3;
+}
+
+
