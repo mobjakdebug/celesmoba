@@ -66,7 +66,7 @@ dependencies {
 
     implementation("com.squareup.okhttp3:okhttp:5.1.0")
     implementation("com.google.code.gson:gson:2.13.1")
-    implementation("commons-io:commons-io:2.19.0")
+    implementation("commons-io:commons-io:2.21.0")
     implementation("org.java-websocket:Java-WebSocket:1.6.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
