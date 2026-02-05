@@ -48,7 +48,10 @@ jobs:
           distribution: 'temurin'
       - run: chmod +x gradlew
       - run: ./gradlew createDistributable
-      - run: tar -czf celesmob-macos-x64.tar.gz -C build/compose/binaries/main/app celesmob/
+      - run: |
+          find build -type d -name "celesmob" | head -1 | while read dir; do
+            tar -czf celesmob-macos-x64.tar.gz -C "$(dirname "$dir")" "$(basename "$dir")"
+          done
       - uses: actions/upload-artifact@v4
         with:
           name: celesmob-macos
