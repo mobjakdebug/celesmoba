@@ -31,11 +31,12 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-      - run: .\gradlew.bat packageReleaseMsi
+      - run: .\gradlew.bat createDistributable
+      - run: powershell Compress-Archive -Path build/compose/binaries/main/app/celesmob -DestinationPath celesmob-windows-x64.zip
       - uses: actions/upload-artifact@v4
         with:
           name: celesmob-windows
-          path: build/compose/binaries/main/msi/
+          path: celesmob-windows-x64.zip
 
   build-macos:
     runs-on: macos-latest
@@ -46,11 +47,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - run: chmod +x gradlew
-      - run: ./gradlew packageReleaseDmg
+      - run: ./gradlew createDistributable
+      - run: cd build/compose/binaries/main/app && tar -czf ../../../../../../../celesmob-macos-x64.tar.gz celesmob/
       - uses: actions/upload-artifact@v4
         with:
           name: celesmob-macos
-          path: build/compose/binaries/main/dmg/
+          path: celesmob-macos-x64.tar.gz
 
   create-release:
     needs: [build-linux, build-windows, build-macos]
@@ -62,5 +64,5 @@ jobs:
         with:
           files: |
             celesmob-linux/celesmob-linux-x64.tar.gz
-            celesmob-windows/**
-            celesmob-macos/**
+            celesmob-windows/celesmob-windows-x64.zip
+            celesmob-macos/celesmob-macos-x64.tar.gz
