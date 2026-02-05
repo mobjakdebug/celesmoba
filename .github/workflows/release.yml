@@ -32,16 +32,20 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
       - run: .\gradlew.bat fatJar
-      - run: mkdir celesmob-windows && copy build\libs\celestial-*-standalone.jar celesmob-windows\celestial.jar && copy build\libs\celestial-*-standalone.jar README.txt celesmob-windows\
       - run: |
-          echo "CelesMob Launcher" > celesmob-windows\README.txt
-          echo "=================" >> celesmob-windows\README.txt
-          echo "" >> celesmob-windows\README.txt
-          echo "To run:" >> celesmob-windows\README.txt
-          echo "  java -jar celestial.jar" >> celesmob-windows\README.txt
-          echo "" >> celesmob-windows\README.txt
-          echo "Requires: Java 21 or higher" >> celesmob-windows\README.txt
-      - run: powershell Compress-Archive -Path celesmob-windows -DestinationPath celesmob-windows-x64.zip
+          mkdir celesmob-windows
+          copy build\libs\celestial-*-standalone.jar celesmob-windows\celestial.jar
+      - run: |
+          @"
+          CelesMob Launcher
+          =================
+          
+          To run:
+            java -jar celestial.jar
+          
+          Requires: Java 21 or higher
+          "@ | Out-File -FilePath celesmob-windows\README.txt -Encoding UTF8
+      - run: powershell -Command "Compress-Archive -Path celesmob-windows -DestinationPath celesmob-windows-x64.zip"
       - uses: actions/upload-artifact@v4
         with:
           name: celesmob-windows
